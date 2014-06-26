@@ -1,0 +1,189 @@
+cloud::root_password: "%{hiera('root_password')}"
+cloud::site_domain: "%{hiera('site_domain')}"
+cloud::dns_ips: "%{hiera('dns_ips')}"
+cloud::ntp_servers: "%{hiera('ntp_servers')}"
+
+# root / enovance
+root_password: {{ config.root_password }}
+
+site_domain: {{ config.domain }}
+region: {{ config.region }}
+dns_ips: {{ config.dns_ips }}
+
+ntp_servers:
+{% for server in config.ntp_servers %}  - {{ server }}
+{% endfor %}
+
+vip_public_ip: {{ config.vip_public_ip }}
+vip_admin_ip: {{ config.vip_admin_ip }}
+
+vip_public_fqdn: {{ config.vip_public_fqdn }}
+vip_internal_fqdn: {{ config.vip_internal_fqdn }}
+vip_admin_fqdn: {{ config.vip_admin_fqdn }}
+
+endpoint_proto: {{ config.endpoint_proto }}
+
+public_network: '{{ config.public_network }}'
+internal_network: {{ config.internal_network }}
+admin_network: {{ config.admin_network }}
+storage_network: {{ config.storage_network }}
+
+public_netif: {{ config.public_netif }}
+internal_netif: {{ config.internal_netif }}
+admin_netif: {{ config.admin_netif }}
+storage_netif: {{ config.storage_netif }}
+external_netif: {{ config.external_netif }}
+
+public_netif_ip: "%{::ipaddress_eth0}"
+internal_netif_ip: "%{::ipaddress_eth0}"
+admin_netif_ip: "%{::ipaddress_eth0}"
+storage_netif_ip: "%{::ipaddress_eth0}"
+
+api_eth: "%{hiera('internal_netif_ip')}"
+storage_eth: "%{hiera('storage_netif_ip')}"
+
+mgmt_names:
+{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - {{ hname }}{% endif %}
+{% endfor %}
+mgmt_internal_ips:
+{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - {{ hosts[hname].ip }}{% endif %}
+{% endfor %}
+
+db_allowed_hosts:
+{% for host in config.db_allowed_hosts %}  - {{ host }}
+{% endfor %}
+
+mongo_nodes: "%{hiera('mgmt_internal_ips')}"
+
+# MySQL
+galera_ip: "%{hiera('vip_public_ip')}"
+galera_master_name: {{ config.galera_master_name }}
+galera_internal_ips: "%{hiera('mgmt_internal_ips')}"
+mysql_root_password: {{ config.mysql_root_password }}
+mysql_sys_maint_password: {{ config.mysql_sys_maint_password }}
+galera_clustercheck_ipaddress: "%{hiera('internal_netif_ip')}"
+galera_clustercheck_dbuser: {{ config.galera_clustercheck_dbuser }}
+galera_clustercheck_dbpassword: {{ config.galera_clustercheck_dbpassword }}
+
+# Useful when we need a single Rabbit host (like Sensu needs)
+# rabbit_hosts: defined in site.pp
+rabbit_names: "%{hiera('mgmt_names')}"
+rabbit_host: {{ config.rabbit_host }}
+rabbit_hosts:
+{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - '{{ hosts[hname].ip }}:5672'{% endif %}
+{% endfor %}
+rabbit_password: {{ config.rabbit_password }}
+
+# Memcache
+memcache_servers:
+{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - '{{ hosts[hname].ip }}:11211'{% endif %}
+{% endfor %}
+
+# Horizon
+secret_key: {{ config.secret_key }}
+
+# Cinder
+cinder_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
+cinder_db_host: "%{hiera('galera_ip')}"
+cinder_db_password: {{ config.cinder_db_password }}
+ks_cinder_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_cinder_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_cinder_password: {{ config.ks_cinder_password }}
+ks_cinder_public_host: "%{hiera('vip_public_fqdn')}"
+
+# Heat
+heat_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
+heat_db_host: "%{hiera('galera_ip')}"
+heat_db_password: {{ config.heat_db_password }}
+ks_heat_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_heat_admin_proto: "%{hiera('protocol')}"
+ks_heat_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_heat_password: {{ config.ks_heat_password }}
+ks_heat_public_host: "%{hiera('vip_public_fqdn')}"
+auth_encryption_key: {{ config.heat_auth_encryption_key }}
+
+# Glance
+glance_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
+glance_db_host: "%{hiera('galera_ip')}"
+glance_db_password: {{ config.glance_db_password }}
+ks_glance_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_glance_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_glance_public_host: "%{hiera('vip_public_fqdn')}"
+ks_glance_password: {{ config.ks_glance_password }}
+
+# Ceilometer
+ceilometer_secret: {{ config.ceilometer_secret }}
+ks_ceilometer_admin_host:  "%{hiera('vip_admin_fqdn')}"
+ks_ceilometer_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_ceilometer_password: {{ config.ks_ceilometer_password }}
+ks_ceilometer_public_host: "%{hiera('vip_public_fqdn')}"
+replset_members: "%{hiera('mgmt_internal_ips')}"
+
+# Ceph
+ceph_public_network: "%{hiera('public_network')}"
+ceph_cluster_network: "%{hiera('storage_network')}"
+ceph_fsid: {{ config.ceph_fsid }}
+ceph_mon_secret: {{ config.ceph_mon_secret }}
+ceph_osd_devices:
+{% for disk in config.ceph_osd_devices %}  - {{ disk }}
+{% endfor %}
+ceph_names:
+{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - {{ hname }}{% endif %}
+{% endfor %}
+cinder_rbd_pool: {{ config.cinder_rbd_pool }}
+cinder_rbd_user: {{ config.cinder_rbd_user }}
+
+# Keystone
+keystone_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
+keystone_db_host: "%{hiera('galera_ip')}"
+keystone_db_password: {{ config.keystone_db_password }}
+ks_admin_email: {{ config.ks_admin_email }}
+ks_admin_password: {{ config.ks_admin_password }}
+ks_admin_token: {{ config.ks_admin_token }}
+ks_keystone_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_keystone_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_keystone_public_host: "%{hiera('vip_public_fqdn')}"
+
+# Nova
+ks_nova_password: {{ config.ks_nova_password }}
+nova_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
+nova_db_host: "%{hiera('galera_ip')}"
+nova_db_password: {{ config.nova_db_password }}
+ks_nova_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_nova_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_nova_public_host: "%{hiera('vip_public_fqdn')}"
+neutron_metadata_proxy_shared_secret: {{ config.neutron_metadata_proxy_shared_secret }}
+nova_ssh_public_key: '{{ config.nova_ssh_public_key }}'
+nova_ssh_private_key: '{{ config.nova_ssh_private_key }}'
+libvirt_type: '{{ config.libvirt_type }}'
+
+# Neutron
+neutron_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
+neutron_db_host: "%{hiera('galera_ip')}"
+neutron_db_password: {{ config.neutron_db_password }}
+external_int: "%{hiera('public_netif')}"
+ks_neutron_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_neutron_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_neutron_password: {{ config.ks_neutron_password }}
+ks_neutron_public_host: "%{hiera('vip_public_fqdn')}"
+neutron_metadata_proxy_shared_secret: {{ config.neutron_metadata_proxy_shared_secret }}
+
+# Swift
+ks_swift_admin_host: "%{hiera('vip_admin_fqdn')}"
+ks_swift_dispersion_password: {{ config.ks_swift_dispersion_password }}
+ks_swift_internal_host: "%{hiera('vip_internal_fqdn')}"
+ks_swift_password: {{ config.ks_swift_password }}
+ks_swift_public_host: "%{hiera('vip_public_fqdn')}"
+replicas: {{ config.replicas }}
+statsd_host: {{ config.statsd_host }}
+swift_cors_allow_origin: "http://%{hiera('vip_public_fqdn')}"
+swift_hash_suffix: {{ config.swift_hash_suffix }}
+swift_zone:
+{% for zone in config.swift_zone %}  {{ zone }}: {{ config.swift_zone[zone] }}
+{% endfor %}
+
+# HAproxy
+haproxy_auth: {{ config.haproxy_auth }}
+
+classes:
+  - cloud
