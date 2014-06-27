@@ -1,0 +1,130 @@
+heat_template_version: 2013-05-23
+
+description: >
+  12 nodes setup of an OpenStack reference architecture from eNovance
+
+resources:
+  mysecgroup:
+    type: OS::Neutron::SecurityGroup
+    properties:
+      rules: [
+        {remote_ip_prefix: 0.0.0.0/0,
+        protocol: tcp,
+        port_range_min: 22,
+        port_range_max: 22},
+        {remote_ip_prefix: 0.0.0.0/0,
+        protocol: icmp}]
+
+  {{ config.private_net_name }}:
+    type: OS::Neutron::Net
+
+  private_subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource: {{ config.private_net_name }} }
+      cidr: {{ config.public_network }}
+      enable_dhcp: true
+
+  vip_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_resource: {{ config.private_net_name }} }
+      fixed_ips:
+        - subnet_id: { get_resource: private_subnet }
+          ip_address: {{ config.vip_admin_ip }}
+      security_groups: [{ get_resource: mysecgroup }]
+
+{% if floating_network_id %}
+  router:
+    type: OS::Neutron::Router
+
+  router_gateway:
+    type: OS::Neutron::RouterGateway
+    properties:
+      router_id: { get_resource: router }
+      network_id: {{ floating_network_id }}
+
+  router_interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router }
+      subnet_id: { get_resource: private_subnet }
+
+  public_ip:
+    type: OS::Neutron::FloatingIP
+    properties:{% for hname in hosts -%}{% if hosts[hname].profile == 'install-server' %}
+      port_id: { get_resource: {{ hname }}_port }
+      floating_network_id: {{ floating_network_id }}
+{% endif -%}
+{% endfor -%}
+{% endif -%}
+{% for hname in hosts %}
+  {{ hname }}_port:
+    type: OS::Neutron::Port
+    properties:
+      network_id: { get_resource: {{ config.private_net_name }} }
+{% if hosts[hname].profile != 'install-server' %}      allowed_address_pairs:
+        - ip_address: {{ config.vip_admin_ip }}
+          mac_address: { get_attr: [vip_port, mac_address] }{% endif %}
+      fixed_ips:
+        - subnet_id: { get_resource: private_subnet }
+          ip_address: {{ hosts[hname].ip }}
+      security_groups: [{ get_resource: mysecgroup }]
+
+  {{ hname }}:
+    type: OS::Nova::Server
+    properties:
+      image: {{ profiles[hosts[hname].profile].edeploy }}{% if role_version %}-{{ role_version }}{% endif %}
+      flavor: {{ config.flavor }}
+      networks:
+        - port: { get_resource: {{ hname }}_port }
+      user_data_format: RAW
+      user_data: |
+        #cloud-config
+
+        hostname: {{ hname }}
+        fqdn: {{ hname }}.{{ config.domain}}
+        manage_etc_hosts: false
+
+        groups:
+          - {{ config.remote_user }}
+        
+        users:
+          - default
+          - name: {{ config.remote_user }}
+            primary-group: {{ config.remote_user }}
+            sudo: ALL=(ALL) NOPASSWD:ALL
+            shell: /bin/bash
+            ssh-authorized-keys:{% for key in config.ssh_authorized_keys %}
+              - {{ key }}{% endfor %}
+
+        write_files:
+          - path: /etc/sudoers.d/999-jenkins-cloud-init-requiretty
+            permissions: 0440
+            content: |
+              Defaults:jenkins !requiretty
+{% if hosts[hname].profile != 'install-server' -%}
+{% for dev in config.ceph_osd_devices %}
+  {{ hname }}_{{ dev }}:
+    type: OS::Cinder::Volume
+    properties:
+      size: {{ config.volume_size }}
+
+  {{ hname }}_{{ dev }}_attachment:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id: { get_resource: {{ hname }}_{{ dev }} }
+      instance_uuid: { get_resource: {{ hname }} }
+      mountpoint: /dev/{{ dev }}
+{% endfor -%}
+{% endif -%}
+{% endfor %}
+outputs:
+{% if floating_network_id %}
+  output_public_ip:
+    description: Floating IP address of the install server in the public network
+    value: { get_attr: [ public_ip, floating_ip_address ] }
+{% endif %}
+# Local variables:
+# mode: yaml
+# End:
