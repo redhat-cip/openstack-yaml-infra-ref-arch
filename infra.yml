@@ -4,7 +4,7 @@ profiles:
     arity: 1
     edeploy: install-server
   load-balancer:
-    arity: 2
+    arity: 2+n
     edeploy: openstack-full
     steps:
       2:
@@ -25,7 +25,7 @@ profiles:
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
   controller:
-    arity: 3
+    arity: 3+2n
     edeploy: openstack-full
     steps:
       1:
@@ -88,7 +88,7 @@ profiles:
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
   compute:
-    arity: 3
+    arity: 1+n
     edeploy: openstack-full
     steps:
       4:
@@ -109,7 +109,7 @@ profiles:
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
   storage:
-    arity: 3
+    arity: 3+2n
     edeploy: openstack-full
     steps:
       2:
