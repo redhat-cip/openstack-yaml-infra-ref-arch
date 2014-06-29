@@ -24,7 +24,7 @@ resources:
       network_id: { get_resource: {{ config.private_net_name }} }
       cidr: {{ config.public_network }}
       dns_nameservers: {{ config.dns_ips }}
-      enable_dhcp: true
+      enable_dhcp: false
 
   vip_port:
     type: OS::Neutron::Port
