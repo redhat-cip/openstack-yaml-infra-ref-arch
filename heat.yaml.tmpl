@@ -104,7 +104,7 @@ resources:
             permissions: 0440
             content: |
               Defaults:jenkins !requiretty
-{% if hosts[hname].profile != 'install-server' -%}
+{% if hosts[hname].profile == 'storage' -%}
 {% for dev in config.ceph_osd_devices %}
   {{ hname }}_{{ dev }}:
     type: OS::Cinder::Volume
