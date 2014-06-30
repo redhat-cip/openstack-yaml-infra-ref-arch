@@ -37,6 +37,7 @@ resources:
       cidr: {{ config.internal_network }}
       dns_nameservers: {{ config.dns_ips }}
       enable_dhcp: true
+      allocation_pools: [{"start": {{ config.internal_network_start_ip }}, "end": {{ config.internal_network_end_ip }}}]
 
   vip_port:
     type: OS::Neutron::Port
