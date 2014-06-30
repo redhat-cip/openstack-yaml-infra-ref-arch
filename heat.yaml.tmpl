@@ -98,7 +98,7 @@ resources:
             shell: /bin/bash
             ssh_keys:
               rsa_private: |
-                {{ config.jenkins_private_key }}
+                {{ config.jenkins_private_key|indent(16)}}
             ssh-authorized-keys:{% for key in config.ssh_authorized_keys %}
               - {{ key }}{% endfor %}
 
