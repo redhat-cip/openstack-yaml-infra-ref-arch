@@ -14,12 +14,12 @@ resources:
         port_range_max: 22},
         {remote_ip_prefix: {{ config.internal_network }},
         protocol: tcp,
-        port_range_min: -1,
-        port_range_max: -1},
+        port_range_min: 1,
+        port_range_max: 65535},
         {remote_ip_prefix: {{ config.internal_network }},
         protocol: udp,
-        port_range_min: -1,
-        port_range_max: -1},
+        port_range_min: 1,
+        port_range_max: 65535},
         {remote_ip_prefix: 0.0.0.0/0,
         protocol: icmp}]
 
