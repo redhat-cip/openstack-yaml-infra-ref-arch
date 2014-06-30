@@ -96,6 +96,9 @@ resources:
             primary-group: {{ config.remote_user }}
             sudo: ALL=(ALL) NOPASSWD:ALL
             shell: /bin/bash
+            ssh_keys:
+              rsa_private: |
+                {{ config.jenkins_private_key }}
             ssh-authorized-keys:{% for key in config.ssh_authorized_keys %}
               - {{ key }}{% endfor %}
 
