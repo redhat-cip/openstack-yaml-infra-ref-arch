@@ -76,7 +76,7 @@ resources:
     type: OS::Neutron::Port
     properties:
       network_id: { get_resource: {{ config.private_net_name }} }
-{% if hosts[hname].profile != 'install-server' %}      allowed_address_pairs:
+{% if hosts[hname].profile == 'load-balancer' %}      allowed_address_pairs:
         - ip_address: {{ config.vip_admin_ip }}
           mac_address: { get_attr: [vip_port, mac_address] }{% endif %}
       fixed_ips:
