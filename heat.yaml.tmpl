@@ -97,7 +97,7 @@ resources:
   {{ hname }}:
     type: OS::Nova::Server
     properties:
-      image: "{{ profiles[hosts[hname].profile].edeploy }}-{get_param: dist}-{get_param: release}"
+      image: {{ profiles[hosts[hname].profile].edeploy }}-{get_param: dist}-{get_param: release}
       flavor: {{ config.flavor }}
       networks:
         - port: { get_resource: {{ hname }}_port }
