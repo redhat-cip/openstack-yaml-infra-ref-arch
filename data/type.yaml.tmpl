@@ -30,7 +30,6 @@ cloud::network::metadata::ks_neutron_password: "%{hiera('ks_neutron_password')}"
 cloud::network::metadata::neutron_metadata_proxy_shared_secret: "%{hiera('neutron_metadata_proxy_shared_secret')}"
 cloud::network::metadata::nova_metadata_server: "%{hiera('vip_public_ip')}"
 cloud::network::metadata::ks_keystone_admin_host: "%{hiera('ks_keystone_admin_host')}"
-cloud::network::metadata::ks_nova_internal_proto: "%{hiera('endpoint_proto')}"
 cloud::network::metadata::ks_keystone_admin_proto: "%{hiera('endpoint_proto')}"
 
 cloud::network::lbaas::manage_haproxy_pkg: false
@@ -104,11 +103,10 @@ cloud::identity::ks_swift_public_proto: "%{hiera('endpoint_proto')}"
 cloud::compute::hypervisor::server_proxyclient_address: "%{hiera('internal_netif_ip')}"
 cloud::compute::hypervisor::ks_nova_public_host: "%{hiera('ks_nova_public_host')}"
 cloud::compute::hypervisor::ks_nova_public_proto: "%{hiera('endpoint_proto')}"
-cloud::compute::hypervisor::ks_spice_public_proto: https
+cloud::compute::hypervisor::ks_spice_public_proto: http
 cloud::compute::hypervisor::nova_rbd_secret_uuid: "%{hiera('ceph_fsid')}"
 cloud::compute::hypervisor::nova_ssh_private_key: "%{hiera('nova_ssh_private_key')}"
 cloud::compute::hypervisor::nova_ssh_public_key: "%{hiera('nova_ssh_public_key')}"
-cloud::compute::hypervisor::vm_rbd: true
 cloud::compute::hypervisor::volume_rbd: true
 cloud::compute::hypervisor::libvirt_type: "%{hiera('libvirt_type')}"
 

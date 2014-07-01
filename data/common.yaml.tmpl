@@ -34,10 +34,10 @@ admin_netif: {{ config.admin_netif }}
 storage_netif: {{ config.storage_netif }}
 external_netif: {{ config.external_netif }}
 
-public_netif_ip: "%{::ipaddress_eth0}"
-internal_netif_ip: "%{::ipaddress_eth0}"
-admin_netif_ip: "%{::ipaddress_eth0}"
-storage_netif_ip: "%{::ipaddress_eth0}"
+public_netif_ip: '{{ config.public_netif_ip }}'
+internal_netif_ip: '{{ config.internal_netif_ip }}'
+admin_netif_ip: '{{ config.admin_netif_ip }}'
+storage_netif_ip: '{{ config.storage_netif_ip }}'
 
 api_eth: "%{hiera('internal_netif_ip')}"
 storage_eth: "%{hiera('storage_netif_ip')}"
