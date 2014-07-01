@@ -4,11 +4,13 @@ description: >
   Deploy the full OpenStack reference architecture from eNovance
 
 parameters:
-  dist: string
-  description: Linux distribution codename
+  dist:
+    type: string
+    description: Linux distribution codename
 
-  release: string
-  description: Release codename
+  release:
+    type: string
+    description: Release codename
 
 resources:
   mysecgroup:
