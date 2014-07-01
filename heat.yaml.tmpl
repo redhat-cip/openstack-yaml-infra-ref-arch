@@ -97,7 +97,13 @@ resources:
   {{ hname }}:
     type: OS::Nova::Server
     properties:
-      image: {{ profiles[hosts[hname].profile].edeploy }}-{get_param: dist}-{get_param: release}
+      image:
+        str_replace:
+          template: profile-dist-release
+          params:
+            profile: {{ profiles[hosts[hname].profile].edeploy }}
+            dist: { get_param: dist}
+            release: { get_param: release}
       flavor: {{ config.flavor }}
       networks:
         - port: { get_resource: {{ hname }}_port }
@@ -111,7 +117,7 @@ resources:
 
         groups:
           - {{ config.remote_user }}
-        
+
         users:
           - default
           - name: {{ config.remote_user }}
@@ -164,6 +170,7 @@ outputs:
     description: Floating IP address of the install server in the public network
     value: { get_attr: [ public_ip, floating_ip_address ] }
 {% endif %}
+
 # Local variables:
 # mode: yaml
 # End:
