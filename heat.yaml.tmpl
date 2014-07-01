@@ -3,6 +3,13 @@ heat_template_version: 2013-05-23
 description: >
   Deploy the full OpenStack reference architecture from eNovance
 
+parameters:
+  dist: string
+  description: Linux distribution codename
+
+  release: string
+  description: Release codename
+
 resources:
   mysecgroup:
     type: OS::Neutron::SecurityGroup
@@ -88,7 +95,7 @@ resources:
   {{ hname }}:
     type: OS::Nova::Server
     properties:
-      image: {{ profiles[hosts[hname].profile].edeploy }}{% if config.dist %}-{{ config.dist }}-{{ config.release }}{% endif %}
+      image: {{ profiles[hosts[hname].profile].edeploy }}-{get_param: dist}-{get_param: release}
       flavor: {{ config.flavor }}
       networks:
         - port: { get_resource: {{ hname }}_port }
