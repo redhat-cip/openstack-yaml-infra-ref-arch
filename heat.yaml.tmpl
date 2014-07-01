@@ -88,7 +88,7 @@ resources:
   {{ hname }}:
     type: OS::Nova::Server
     properties:
-      image: {{ profiles[hosts[hname].profile].edeploy }}{% if role_version %}-{{ role_version }}{% endif %}
+      image: {{ profiles[hosts[hname].profile].edeploy }}{% if config.dist %}-{{ config.dist }}-{{ config.release }}{% endif %}
       flavor: {{ config.flavor }}
       networks:
         - port: { get_resource: {{ hname }}_port }
