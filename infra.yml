@@ -155,3 +155,4 @@ serverspec:
   cloud::dashboard: dashboard
   cloud::object::controller: object_proxy
   cloud::object::storage: object_storage
+  cloud::spof: spof
