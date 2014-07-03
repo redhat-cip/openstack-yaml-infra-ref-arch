@@ -182,6 +182,12 @@ swift_zone:
 {% for zone in config.swift_zone %}  {{ zone }}: {{ config.swift_zone[zone] }}
 {% endfor %}
 
+# Rsyslog
+rsyslog::client::log_remote: true
+rsyslog::client::remote_type: udp
+rsyslog::client::port: {{ config.syslog_port }}
+rsyslog::client::server: {{ config.syslog_server }}
+
 # HAproxy
 haproxy_auth: {{ config.haproxy_auth }}
 
