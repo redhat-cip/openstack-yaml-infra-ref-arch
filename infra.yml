@@ -3,6 +3,10 @@ profiles:
   install-server:
     arity: 1
     edeploy: install-server
+    steps:
+      1:
+        roles:
+          - cloud::logging::server
   load-balancer:
     arity: 2+n
     edeploy: openstack-full
@@ -167,3 +171,4 @@ serverspec:
   cloud::object::storage: object_storage
   cloud::spof: spof
   cloud::logging::agent: logging_agent
+  cloud::logging::server: logging_server
