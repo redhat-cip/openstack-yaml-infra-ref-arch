@@ -64,6 +64,7 @@ profiles:
           - cloud::telemetry::notification
           - cloud::network::controller
           - cloud::orchestration::api
+          - cloud::orchestration::engine
           - cloud::object::controller
           - cloud::object::ringbuilder
           - cloud::spof
