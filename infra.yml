@@ -31,6 +31,8 @@ profiles:
       neutron_mechanism_drivers: neutron_mechanism_drivers
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
+      syslog_server: syslog_server
+      syslog_port: syslog_port
   controller:
     arity: 3+2n
     edeploy: openstack-full
@@ -96,6 +98,8 @@ profiles:
       neutron_mechanism_drivers: neutron_mechanism_drivers
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
+      syslog_server: syslog_server
+      syslog_port: syslog_port
   compute:
     arity: 1+n
     edeploy: openstack-full
@@ -120,6 +124,8 @@ profiles:
       neutron_mechanism_drivers: neutron_mechanism_drivers
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
+      syslog_server: syslog_server
+      syslog_port: syslog_port
   storage:
     arity: 3+2n
     edeploy: openstack-full
@@ -148,6 +154,8 @@ profiles:
       neutron_mechanism_drivers: neutron_mechanism_drivers
       neutron_tunnel_id_ranges: neutron_tunnel_id_ranges
       neutron_firewall_driver: neutron_firewall_driver
+      syslog_server: syslog_server
+      syslog_port: syslog_port
 
 ordered_profiles:
   - load-balancer
