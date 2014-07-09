@@ -242,11 +242,7 @@ profiles:
 ordered_profiles:
   - install-server
   - lb-controller
-  - load-balancer
-  - controller
   - compute-storage
-  - compute
-  - storage
 
 serverspec:
   cloud::database::sql: database
