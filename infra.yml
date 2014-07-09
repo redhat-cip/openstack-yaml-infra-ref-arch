@@ -48,7 +48,6 @@ profiles:
           - cloud::logging::agent
       2:
         roles:
-          - cloud::loadbalancer
           - cloud::dashboard
       3:
         roles:
