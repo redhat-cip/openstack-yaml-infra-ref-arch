@@ -194,6 +194,7 @@ swift_zone:
 # Rsyslog
 rsyslog::client::log_remote: true
 rsyslog::client::remote_type: udp
+rsyslog::client::remote_forward_format: RSYSLOG_TraditionalForwardFormat
 rsyslog::client::port: {{ config.syslog_port }}
 rsyslog::client::server: {{ config.syslog_server }}
 
