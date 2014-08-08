@@ -34,7 +34,7 @@ cloud::network::metadata::nova_metadata_server: "%{hiera('vip_public_ip')}"
 cloud::network::metadata::ks_keystone_admin_host: "%{hiera('ks_keystone_admin_host')}"
 cloud::network::metadata::ks_keystone_admin_proto: "%{hiera('endpoint_proto')}"
 
-cloud::network::lbaas::manage_haproxy_pkg: false
+cloud::network::lbaas::manage_haproxy_pkg: true
 
 cloud::identity::swift_enabled: true
 cloud::identity::keystone_db_host: "%{hiera('keystone_db_host')}"
