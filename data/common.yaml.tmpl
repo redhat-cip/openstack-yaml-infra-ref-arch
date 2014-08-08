@@ -2,6 +2,8 @@ cloud::root_password: "%{hiera('root_password')}"
 cloud::site_domain: "%{hiera('site_domain')}"
 cloud::dns_ips: "%{hiera('dns_ips')}"
 ntp::servers: "%{hiera('ntp_servers')}"
+debug: {{ config.debug }}
+verbose: {{ config.verbose }}
 
 # root / enovance
 root_password: {{ config.root_password }}
