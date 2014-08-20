@@ -132,11 +132,6 @@ cloud::compute::ks_glance_internal_host: "%{hiera('ks_glance_internal_host')}"
 cloud::compute::ks_glance_internal_proto: "%{hiera('endpoint_proto')}"
 cloud::compute::availability_zone: "%{hiera('region')}"
 
-cloud::network::rabbit_hosts: "%{hiera('rabbit_hosts')}"
-cloud::network::rabbit_password: "%{hiera('rabbit_password')}"
-cloud::network::tunnel_eth: "%{hiera('internal_netif_ip')}"
-cloud::network::api_eth: "%{hiera('internal_netif_ip')}"
-
 cloud::telemetry::rabbit_hosts: "%{hiera('rabbit_hosts')}"
 cloud::telemetry::rabbit_password: "%{hiera('rabbit_password')}"
 cloud::telemetry::region: "%{hiera('region')}"
