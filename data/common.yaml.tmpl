@@ -43,10 +43,10 @@ api_eth: "%{hiera('internal_netif_ip')}"
 storage_eth: "%{hiera('storage_netif_ip')}"
 
 mgmt_names:
-{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - {{ hname }}{% endif %}
+{% for hname in hosts %}{% if hosts[hname].profile == 'controller' %}  - {{ hname }}{% endif %}
 {% endfor %}
 mgmt_internal_ips:
-{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - {{ hosts[hname].ip }}{% endif %}
+{% for hname in hosts %}{% if hosts[hname].profile == 'controller' %}  - {{ hosts[hname].ip }}{% endif %}
 {% endfor %}
 
 db_allowed_hosts:
@@ -70,13 +70,13 @@ galera_clustercheck_dbpassword: {{ config.galera_clustercheck_dbpassword }}
 rabbit_names: "%{hiera('mgmt_names')}"
 rabbit_host: {{ config.rabbit_host }}
 rabbit_hosts:
-{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - '{{ hosts[hname].ip }}:5672'{% endif %}
+{% for hname in hosts %}{% if hosts[hname].profile == 'controller' %}  - '{{ hosts[hname].ip }}:5672'{% endif %}
 {% endfor %}
 rabbit_password: {{ config.rabbit_password }}
 
 # Memcache
 memcache_servers:
-{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - '{{ hosts[hname].ip }}:11211'{% endif %}
+{% for hname in hosts %}{% if hosts[hname].profile == 'controller' %}  - '{{ hosts[hname].ip }}:11211'{% endif %}
 {% endfor %}
 
 # Horizon
@@ -128,7 +128,7 @@ ceph_osd_devices:
 {% for disk in config.ceph_osd_devices %}  - {{ disk }}
 {% endfor %}
 ceph_names:
-{% for hname in hosts %}{% if hosts[hname].profile != 'install-server' %}  - {{ hname }}{% endif %}
+{% for hname in hosts %}{% if hosts[hname].profile == 'controller' %}  - {{ hname }}{% endif %}
 {% endfor %}
 cinder_rbd_pool: {{ config.cinder_rbd_pool }}
 cinder_rbd_user: {{ config.cinder_rbd_user }}
