@@ -44,7 +44,8 @@ resources:
     properties:
       network_id: { get_resource: {{ config.private_net_name }} }
       cidr: {{ config.internal_network }}
-      dns_nameservers: {{ config.dns_ips }}
+      dns_nameservers:{% for dnsip in config.dns_ips %}
+        - {{ dnsip }}{% endfor %}
       enable_dhcp: true
       allocation_pools: [{"start": {{ config.internal_network_start_ip }}, "end": {{ config.internal_network_end_ip }}}]
 
@@ -164,8 +165,9 @@ resources:
 {% endfor -%}
 {% endif -%}
 {% endfor %}
-outputs:
+
 {% if floating_network_id %}
+outputs:
   output_public_ip:
     description: Floating IP address of the install server in the public network
     value: { get_attr: [ public_ip, floating_ip_address ] }
