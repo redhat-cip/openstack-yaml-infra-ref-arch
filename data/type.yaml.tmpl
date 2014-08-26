@@ -131,6 +131,7 @@ cloud::compute::rabbit_password: "%{hiera('rabbit_password')}"
 cloud::compute::ks_glance_internal_host: "%{hiera('ks_glance_internal_host')}"
 cloud::compute::ks_glance_internal_proto: "%{hiera('endpoint_proto')}"
 cloud::compute::availability_zone: "%{hiera('region')}"
+cloud::compute::cinder_endpoint_type: "%{hiera('endpoint_type')}"
 
 cloud::telemetry::rabbit_hosts: "%{hiera('rabbit_hosts')}"
 cloud::telemetry::rabbit_password: "%{hiera('rabbit_password')}"
@@ -139,6 +140,7 @@ cloud::telemetry::ks_keystone_internal_host: "%{hiera('ks_keystone_internal_host
 cloud::telemetry::ks_keystone_internal_proto: "%{hiera('endpoint_proto')}"
 cloud::telemetry::ks_ceilometer_password: "%{hiera('ks_ceilometer_password')}"
 cloud::telemetry::ceilometer_secret: "%{hiera('ceilometer_secret')}"
+cloud::telemetry::os_endpoint_type: "%{hiera('endpoint_type')}"
 
 cloud::spof::cluster_ip: "%{hiera('api_eth')}"
 
@@ -178,12 +180,14 @@ cloud::orchestration::heat_db_host: "%{hiera('heat_db_host')}"
 cloud::orchestration::heat_db_password: "%{hiera('heat_db_password')}"
 cloud::orchestration::rabbit_hosts: "%{hiera('rabbit_hosts')}"
 cloud::orchestration::rabbit_password: "%{hiera('rabbit_password')}"
+cloud::orchestration::os_endpoint_type: "%{hiera('endpoint_type')}"
 cloud::orchestration::api::api_eth: "%{hiera('internal_netif_ip')}"
 cloud::orchestration::engine::ks_heat_public_host: "%{hiera('ks_heat_public_host')}"
 cloud::orchestration::engine::ks_heat_public_proto: "%{hiera('endpoint_proto')}"
 cloud::orchestration::engine::ks_heat_password: "%{hiera('ks_heat_password')}"
 cloud::orchestration::engine::auth_encryption_key: "%{hiera('auth_encryption_key')}"
 
+cloud::volume::nova_endpoint_type: "%{hiera('endpoint_type')}"
 cloud::volume::storage::cinder_backends:
   rbd:
     ceph:
@@ -311,5 +315,6 @@ cloud::dashboard::ks_keystone_internal_host: "%{hiera('ks_keystone_internal_host
 cloud::dashboard::api_eth: "%{hiera('api_eth')}"
 cloud::dashboard::keystone_host: "%{hiera('ks_keystone_internal_host')}"
 cloud::dashboard::keystone_proto: "%{hiera('endpoint_proto')}"
+cloud::dashboard::os_endpoint_type: "%{hiera('endpoint_type')}"
 
 cloud::logging::agent::syslog_enable: true
