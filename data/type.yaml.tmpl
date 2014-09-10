@@ -118,6 +118,8 @@ cloud::compute::hypervisor::nova_ssh_private_key: "%{hiera('nova_ssh_private_key
 cloud::compute::hypervisor::nova_ssh_public_key: "%{hiera('nova_ssh_public_key')}"
 cloud::compute::hypervisor::volume_rbd: true
 cloud::compute::hypervisor::libvirt_type: "%{hiera('libvirt_type')}"
+cloud::compute::hypervisor::manage_tso: "%{hiera('manage_tso')}"
+cloud::network::l3::manage_tso: "%{hiera('manage_tso')}"
 
 cloud::compute::neutron_endpoint: "%{hiera('ks_neutron_internal_host')}"
 cloud::compute::neutron_protocol: "%{hiera('endpoint_proto')}"

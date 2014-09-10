@@ -167,6 +167,7 @@ ks_neutron_internal_host: "%{hiera('vip_internal_fqdn')}"
 ks_neutron_password: {{ config.ks_neutron_password }}
 ks_neutron_public_host: "%{hiera('vip_public_fqdn')}"
 neutron_metadata_proxy_shared_secret: {{ config.neutron_metadata_proxy_shared_secret }}
+manage_tso: true
 
 # Trove
 trove_db_allowed_hosts: "%{hiera('db_allowed_hosts')}"
