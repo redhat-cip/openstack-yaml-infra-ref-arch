@@ -166,7 +166,8 @@ cloud::telemetry::api::ks_keystone_internal_host: "%{hiera('ks_keystone_internal
 cloud::telemetry::api::ks_keystone_internal_proto: "%{hiera('endpoint_proto')}"
 cloud::telemetry::api::ks_ceilometer_password: "%{hiera('ks_ceilometer_password')}"
 cloud::telemetry::api::api_eth: "%{hiera('api_eth')}"
-cloud::telemetry::api::mongo_nodes: "%{hiera('mongo_nodes')}"
+
+cloud::telemetry::collector::mongo_nodes: "%{hiera('mongo_nodes')}"
 
 cloud::orchestration::ks_keystone_internal_host: "%{hiera('ks_keystone_internal_host')}"
 cloud::orchestration::ks_keystone_internal_proto: "%{hiera('endpoint_proto')}"
