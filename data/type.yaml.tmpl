@@ -22,10 +22,11 @@ cloud::cache::listen_ip: "%{hiera('internal_netif_ip')}"
 
 cloud::network::rabbit_hosts: "%{hiera('rabbit_hosts')}"
 cloud::network::rabbit_password: "%{hiera('rabbit_password')}"
-cloud::network::tunnel_eth: "%{hiera('internal_netif_ip')}"
 cloud::network::api_eth: "%{hiera('internal_netif_ip')}"
 
 cloud::network::l3::external_int: "%{hiera('external_netif')}"
+
+cloud::network::vswitch::tunnel_eth: "%{hiera('internal_netif_ip')}"
 
 cloud::network::metadata::auth_region: "%{hiera('region')}"
 cloud::network::metadata::ks_neutron_password: "%{hiera('ks_neutron_password')}"
