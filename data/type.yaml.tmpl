@@ -132,6 +132,7 @@ cloud::compute::rabbit_password: "%{hiera('rabbit_password')}"
 cloud::compute::ks_glance_internal_host: "%{hiera('ks_glance_internal_host')}"
 cloud::compute::ks_glance_internal_proto: "%{hiera('endpoint_proto')}"
 cloud::compute::availability_zone: "%{hiera('region')}"
+cloud::compute::nova_db_use_slave: true
 
 cloud::telemetry::rabbit_hosts: "%{hiera('rabbit_hosts')}"
 cloud::telemetry::rabbit_password: "%{hiera('rabbit_password')}"
@@ -308,6 +309,7 @@ cloud::loadbalancer::galera_ip: "%{hiera('galera_ip')}"
 cloud::loadbalancer::vip_public_ip: "%{hiera('vip_public_ip')}"
 cloud::loadbalancer::haproxy_auth: "%{hiera('haproxy_auth')}"
 cloud::loadbalancer::swift_api: true
+cloud::loadbalancer::galera_slave: true
 
 cloud::dashboard::ks_keystone_internal_host: "%{hiera('ks_keystone_internal_host')}"
 cloud::dashboard::api_eth: "%{hiera('api_eth')}"
