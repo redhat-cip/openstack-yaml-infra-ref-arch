@@ -36,7 +36,7 @@ resources:
         {remote_ip_prefix: 0.0.0.0/0,
         protocol: icmp},
         {remote_ip_prefix: 0.0.0.0/0,
-        protocol: 112}]
+        protocol: "112"}]
 
   {{ config.private_net_name }}:
     type: OS::Neutron::Net
