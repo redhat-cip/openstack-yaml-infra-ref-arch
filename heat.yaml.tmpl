@@ -90,8 +90,7 @@ resources:
     properties:
       network_id: { get_resource: {{ config.private_net_name }} }
 {% if hosts[hname].profile == 'load-balancer' %}      allowed_address_pairs:
-        - ip_address: {{ config.vip_admin_ip }}
-          mac_address: { get_attr: [vip_port, mac_address] }{% endif %}
+        - ip_address: {{ config.vip_admin_ip }}{% endif %}
       fixed_ips:
         - subnet_id: { get_resource: private_subnet }
           ip_address: {{ hosts[hname].ip }}
