@@ -188,3 +188,5 @@ serverspec:
   cloud::spof: spof
   cloud::logging::agent: logging_agent
   cloud::logging::server: logging_server
+  cloud::monitoring::agent: monitoring_agent
+  cloud::monitoring::server: monitoring_server
