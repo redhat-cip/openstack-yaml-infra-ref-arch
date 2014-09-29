@@ -15,10 +15,12 @@ profiles:
       1:
         roles:
           - cloud::logging::agent
-          - cloud::monitoring::agent::sensu
       2:
         roles:
           - cloud::loadbalancer
+      3:
+        roles:
+          - cloud::monitoring::agent::sensu
     serverspec_config:
       ks_user_name: ks_admin_tenant
       ks_user_password: ks_admin_password
@@ -48,13 +50,13 @@ profiles:
           - cloud::storage::rbd::monitor
           - cloud::storage::rbd::key
           - cloud::logging::agent
-          - cloud::monitoring::agent::sensu
       2:
         roles:
           - cloud::dashboard
       3:
         roles:
           - cloud::identity
+          - cloud::monitoring::agent::sensu
       4:
         roles:
           - cloud::compute::api
@@ -112,6 +114,8 @@ profiles:
       1:
         roles:
           - cloud::logging::agent
+      3:
+        roles:
           - cloud::monitoring::agent::sensu
       4:
         roles:
@@ -139,7 +143,6 @@ profiles:
       1:
         roles:
           - cloud::logging::agent
-          - cloud::monitoring::agent::sensu
       2:
         roles:
           - cloud::storage::rbd::osd
@@ -147,6 +150,7 @@ profiles:
       3:
         roles:
           - cloud::storage::rbd::pools
+          - cloud::monitoring::agent::sensu
     serverspec_config:
       ks_user_name: ks_admin_tenant
       ks_user_password: ks_admin_password
