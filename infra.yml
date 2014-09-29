@@ -7,6 +7,7 @@ profiles:
       1:
         roles:
           - cloud::logging::server
+          - cloud::monitoring::server::sensu
   load-balancer:
     arity: 2+n
     edeploy: openstack-full
@@ -14,6 +15,7 @@ profiles:
       1:
         roles:
           - cloud::logging::agent
+          - cloud::monitoring::agent::sensu
       2:
         roles:
           - cloud::loadbalancer
@@ -46,6 +48,7 @@ profiles:
           - cloud::storage::rbd::monitor
           - cloud::storage::rbd::key
           - cloud::logging::agent
+          - cloud::monitoring::agent::sensu
       2:
         roles:
           - cloud::dashboard
@@ -109,6 +112,7 @@ profiles:
       1:
         roles:
           - cloud::logging::agent
+          - cloud::monitoring::agent::sensu
       4:
         roles:
           - cloud::compute::hypervisor
@@ -135,6 +139,7 @@ profiles:
       1:
         roles:
           - cloud::logging::agent
+          - cloud::monitoring::agent::sensu
       2:
         roles:
           - cloud::storage::rbd::osd
