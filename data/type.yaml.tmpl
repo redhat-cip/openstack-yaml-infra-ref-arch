@@ -118,6 +118,7 @@ cloud::compute::hypervisor::nova_rbd_secret_uuid: "%{hiera('ceph_fsid')}"
 cloud::compute::hypervisor::nova_ssh_private_key: "%{hiera('nova_ssh_private_key')}"
 cloud::compute::hypervisor::nova_ssh_public_key: "%{hiera('nova_ssh_public_key')}"
 cloud::compute::hypervisor::volume_rbd: true
+cloud::compute::hypervisor::nova_shell: '/bin/bash'
 cloud::compute::hypervisor::libvirt_type: "%{hiera('libvirt_type')}"
 
 cloud::compute::neutron_endpoint: "%{hiera('ks_neutron_internal_host')}"
